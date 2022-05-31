@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8"/>
+    <title>Title</title>
+</head>
+<body>
+<!-- 准备一个容器 -->
+<div id="demo"></div>
+
+
+<!-- react 核心库 -->
+<script src="https://unpkg.com/react@17/umd/react.development.js"></script>
+<!-- react 操作DOM -->
+<script src="https://unpkg.com/react-dom@17/umd/react-dom.development.js"></script>
+<!-- jsx 转化为 js -->
+<script src="https://unpkg.com/babel-standalone@6/babel.min.js"></script>
+
+<script src="https://unpkg.com/prop-types@15.6/prop-types.js"></script>
+
+<script type="text/babel">
+    class Demo extends React.Component {
+
+        constructor(props) {
+            super(props)
+        }
+
+        showData = () => {
+            const {input1} = this
+            console.log(input1)
+            alert(input1.value)
+        }
+
+        showData2 = () => {
+            const {input2} = this
+            console.log(input2)
+            alert(input2.value)
+        }
+
+        render() {
+
+            return (
+                <div>
+                    <input ref={(c)=>{this.input1=c}} type="text"></input>
+                    &nbsp;
+                    <button onClick={this.showData}>点击提示左侧数据</button>
+                    &nbsp;
+                    <input onBlur={this.showData2}  ref={(c)=>{this.input2=c}} type="text" placeholder="失去焦点提示数据"></input>
+                </div>
+            )
+        }
+    }
+
+
+    ReactDOM.render(<Demo/>, document.getElementById('demo'))
+</script>
+</body>
+</html>
