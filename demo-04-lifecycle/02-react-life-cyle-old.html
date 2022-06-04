@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8"/>
+    <title>Title</title>
+</head>
+<body>
+<!-- 准备一个容器 -->
+<div id="demo"></div>
+
+
+<!-- react 核心库 -->
+<script src="https://unpkg.com/react@17/umd/react.development.js"></script>
+<!-- react 操作DOM -->
+<script src="https://unpkg.com/react-dom@17/umd/react-dom.development.js"></script>
+<!-- jsx 转化为 js -->
+<script src="https://unpkg.com/babel-standalone@6/babel.min.js"></script>
+
+<script src="https://unpkg.com/prop-types@15.6/prop-types.js"></script>
+
+<script type="text/babel">
+    class Demo extends React.Component {
+        constructor(props) {
+            super(props)
+            console.log('Demo -> constructor')
+        }
+
+        state = {count: 0}
+
+        addOne = () => {
+            const {count} = this.state
+            this.setState({count: count + 1})
+        }
+
+        death = () => {
+            ReactDOM.unmountComponentAtNode(document.getElementById('demo'))
+        }
+
+        //强制更新按钮回调
+        force = () => {
+            this.forceUpdate()
+        }
+
+
+        //控制组件更新的"阀门"
+        shouldComponentUpdate() {
+            console.log('Demo -> shouldComponentUpdate')
+            return true;
+        }
+
+        //组件将要挂载调用
+        UNSAFE_componentWillMount() {
+            console.log('Demo -> componentWillMount')
+        }
+
+        //组件将要更新的钩子
+        UNSAFE_componentWillUpdate() {
+            console.log('Demo -> componentWillUpdate')
+        }
+
+        //初始化渲染，state变更之后调用
+        render() {
+            console.log('Demo -> render')
+
+            const {count} = this.state
+
+            return (
+                <ul>
+                    <h2>当前求和为:{count}</h2>
+                    <button onClick={this.addOne}>点我+1</button>
+                    <button onClick={this.death}>卸载组件</button>
+                    <button onClick={this.force}>强制更新</button>
+                </ul>
+            )
+        }
+
+        //组件将要被卸载时调用
+        componentWillUnmount() {
+            console.log('Demo -> componentWillUnmount')
+        }
+
+        //组件挂载完毕的钩子
+        componentDidUpdate() {
+            console.log('Demo -> componentDidUpdate ')
+        }
+
+        //组件挂载完毕调用
+        componentDidMount() {
+            console.log('Demo -> componentDidMount')
+        }
+    }
+
+    ReactDOM.render(<Demo/>, document.getElementById('demo'))
+</script>
+</body>
+</html>

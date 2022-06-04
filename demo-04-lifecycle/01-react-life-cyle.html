@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8"/>
+    <title>Title</title>
+</head>
+<body>
+<!-- 准备一个容器 -->
+<div id="demo"></div>
+
+
+<!-- react 核心库 -->
+<script src="https://unpkg.com/react@17/umd/react.development.js"></script>
+<!-- react 操作DOM -->
+<script src="https://unpkg.com/react-dom@17/umd/react-dom.development.js"></script>
+<!-- jsx 转化为 js -->
+<script src="https://unpkg.com/babel-standalone@6/babel.min.js"></script>
+
+<script src="https://unpkg.com/prop-types@15.6/prop-types.js"></script>
+
+<script type="text/babel">
+    class Demo extends React.Component {
+        constructor(props) {
+            super(props)
+        }
+
+        state = {opacity: 1}
+
+        death = () => {
+            ReactDOM.unmountComponentAtNode(document.getElementById('demo'))
+        }
+
+        //初始化渲染，state变更之后调用
+        render() {
+            return (
+                <dev>
+                    <h2 style={{opacity: this.state.opacity}}>React学不会怎么办？</h2>
+                    <button onClick={this.death}>不活了</button>
+                </dev>
+            )
+        }
+
+        //组件挂载完毕调用
+        componentDidMount() {
+            this.timer = setInterval(() => {
+                let {opacity} = this.state
+                opacity -= 0.05
+                if (opacity <= 0) {
+                    opacity = 1
+                }
+                this.setState({opacity})
+            }, 100)
+        }
+
+        //组件将要被卸载时调用
+        componentWillUnmount() {
+            clearInterval(this.timer)
+        }
+
+    }
+
+    ReactDOM.render(<Demo/>, document.getElementById('demo'))
+</script>
+</body>
+</html>

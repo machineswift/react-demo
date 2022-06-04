@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8"/>
+    <title>Title</title>
+</head>
+<body>
+<!-- 准备一个容器 -->
+<div id="demo"></div>
+
+
+<!-- react 核心库 -->
+<script src="https://unpkg.com/react@17/umd/react.development.js"></script>
+<!-- react 操作DOM -->
+<script src="https://unpkg.com/react-dom@17/umd/react-dom.development.js"></script>
+<!-- jsx 转化为 js -->
+<script src="https://unpkg.com/babel-standalone@6/babel.min.js"></script>
+
+<script src="https://unpkg.com/prop-types@15.6/prop-types.js"></script>
+
+<script type="text/babel">
+    class Demo extends React.Component {
+        constructor(props) {
+            super(props)
+        }
+
+        handleSubmit = (event) => {
+            event.preventDefault()
+            const {username, password} = this
+            alert(' 用户名:' + username.value + '  密码:' + password.value)
+        }
+
+        render() {
+            return (
+                <form action="https://www.baidu.com" onSubmit={this.handleSubmit}>
+                    用户名:<input type="text" name="username" ref={(c) => this.username = c}/>
+                    密码:<input type="password" name="password" ref={(c) => this.password = c}/>
+                    <button>登录</button>
+                </form>
+            )
+        }
+    }
+
+    ReactDOM.render(<Demo/>, document.getElementById('demo'))
+</script>
+</body>
+</html>
