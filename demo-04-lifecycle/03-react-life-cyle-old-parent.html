@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8"/>
+    <title>Title</title>
+</head>
+<body>
+<!-- 准备一个容器 -->
+<div id="demo"></div>
+
+
+<!-- react 核心库 -->
+<script src="https://unpkg.com/react@17/umd/react.development.js"></script>
+<!-- react 操作DOM -->
+<script src="https://unpkg.com/react-dom@17/umd/react-dom.development.js"></script>
+<!-- jsx 转化为 js -->
+<script src="https://unpkg.com/babel-standalone@6/babel.min.js"></script>
+
+<script src="https://unpkg.com/prop-types@15.6/prop-types.js"></script>
+
+<script type="text/babel">
+    /**
+     * 1.初始化阶段：React.render() 触发-----初次渲染
+     *  constructor
+     *  componentWillMount
+     *  render
+     *  componentDidMount ====> 常用
+     *      做一些初始化的事情，例如：开启定时器、发送网络请求、订阅消息
+
+     *2.更新阶段：由内部this.setState()或父组件rerender触发
+     *  componentWillReceiveProps
+     *  shouldComponentUpdate
+     *  componentWillUpdate
+     *  render
+     *  componentDidUpdate
+
+     *3.卸载阶段：由React.unmountComponentAtNode()触发
+     *  componentWillUnmount ====> 常用
+     *      做一些收尾的事情，例如：关闭定时器、取消订阅消息
+     */
+    class Demo extends React.Component {
+    }
+
+    class A extends React.Component {
+        state = {carName: '奔驰'}
+
+        changeCar = () => {
+            this.setState({carName: '奥迪'})
+        }
+
+        render() {
+            return (
+                <div>
+                    <div>A</div>
+                    <button onClick={this.changeCar}>换车</button>
+                    <B carName={this.state.carName}/>
+                </div>
+            )
+        }
+
+    }
+
+    class B extends React.Component {
+
+        //组件将要接收新的参数钩子
+        UNSAFE_componentWillReceiveProps() {
+            console.log("B -> componentWillReceiveProps")
+        }
+
+        //控制组件更新的"阀门"
+        shouldComponentUpdate() {
+            console.log('B -> shouldComponentUpdate')
+            return true;
+        }
+
+        //组件将要挂载调用
+        UNSAFE_componentWillMount() {
+            console.log('B -> componentWillMount')
+        }
+
+        //组件将要更新的钩子
+        UNSAFE_componentWillUpdate() {
+            console.log('B -> componentWillUpdate')
+        }
+
+        render() {
+            console.log('B -> render')
+            return (
+                <div>B组件，接收到的车是：{this.props.carName}</div>
+            )
+        }
+
+        //组件将要被卸载时调用
+        componentWillUnmount() {
+            console.log('B -> componentWillUnmount')
+        }
+
+        //组件挂载完毕的钩子
+        componentDidUpdate() {
+            console.log('B -> componentDidUpdate ')
+        }
+
+        //组件挂载完毕调用
+        componentDidMount() {
+            console.log('B -> componentDidMount')
+        }
+    }
+
+    ReactDOM.render(<A/>, document.getElementById('demo'))
+</script>
+</body>
+</html>
