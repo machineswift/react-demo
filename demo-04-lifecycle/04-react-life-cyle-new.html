@@ -41,10 +41,10 @@
             this.forceUpdate()
         }
 
-        //控制组件
+        //state取决于props  {return props}
         static getDerivedStateFromProps(props, state) {
             console.log('Demo -> getDerivedStateFromProps')
-            return {favoritesite: props.favsite };
+            return {favoritesite: props.favsite};
         }
 
         //控制组件更新的"阀门"
@@ -69,14 +69,26 @@
             )
         }
 
-        //组件将要被卸载时调用
-        componentWillUnmount() {
-            console.log('Demo -> componentWillUnmount')
+
+        //组件挂载完毕的钩子
+        getSnapshotBeforeUpdate() {
+            console.log('Demo -> getSnapshotBeforeUpdate ')
+        }
+
+        //控制组件更新的"阀门"
+        shouldComponentUpdate() {
+            console.log('Demo -> shouldComponentUpdate')
+            return true;
         }
 
         //组件挂载完毕的钩子
-        componentDidUpdate() {
+        componentDidUpdate(prevProps, prevState, snapshot) {
             console.log('Demo -> componentDidUpdate ')
+        }
+
+        //组件将要被卸载时调用
+        componentWillUnmount() {
+            console.log('Demo -> componentWillUnmount')
         }
 
         //组件挂载完毕调用
